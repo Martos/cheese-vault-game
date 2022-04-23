@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "10.5.1",
-  "description": "Angular 13 with Electron 18 (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "cheese-vault",
+  "version": "0.85.2",
+  "description": "Cheese Vault game",
+  "homepage": "",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Martos",
+    "email": ""
   },
   "keywords": [
     "angular",
