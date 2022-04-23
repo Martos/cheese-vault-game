@@ -10,12 +10,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenubarModule } from 'primeng/menubar';
+import { ToastModule } from 'primeng/toast';
 
 const PRIMENG_MODULES = [
   ButtonModule,
   CardModule,
   PanelMenuModule,
-  MenubarModule
+  MenubarModule,
+  ToastModule
 ];
 
 @NgModule({

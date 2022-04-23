@@ -6,7 +6,7 @@
             <img src="../../assets/img/cheese.png" height="40" class="mr-2">
         </ng-template>
         <ng-template pTemplate="end">
-          <h1>$0.50 Pz</h1>
+          <h1>{{ currentValue == null ? 'Getting prices ...' : ('$' + currentValue + ' Pz') }}</h1>
         </ng-template>
       </p-menubar>
     </div>
@@ -16,4 +16,6 @@
       <p-card>Menu 3</p-card>
     </div>
   </div>
+
+  <p-toast></p-toast>
 </div>

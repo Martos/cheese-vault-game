@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 import { MenuItem } from 'primeng/api';
 
@@ -12,11 +14,15 @@ export class HomeComponent implements OnInit {
 
   items: MenuItem[];
   topBarItems: MenuItem[];
+  currentValue = null;
 
-  constructor(private router: Router) { }
+  refreshSeconds = 60;
+  refreshValueInterval = null;
+
+  constructor(private router: Router, private http: HttpClient, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    console.log('HomeComponent INIT');
+    this.pricesThread();
     this.items = [
       {
           label: 'File',
@@ -38,6 +44,23 @@ export class HomeComponent implements OnInit {
     this.topBarItems = [
       { label: 'Cheese Vault v0.85' }
     ];
+  }
+
+  pricesThread() {
+    this.currentValue = localStorage.getItem('currentPrice');
+    if(!this.currentValue) {
+      this.http.get<any>('https://www.randomnumberapi.com/api/v1.0/random?min=0&max=1000&count=1').subscribe(data => {
+        this.currentValue = (data[0] / 100);
+        localStorage.setItem('currentPrice', this.currentValue);
+      });
+    }
+    this.refreshValueInterval = setInterval(() => {
+      this.http.get<any>('https://www.randomnumberapi.com/api/v1.0/random?min=0&max=1000&count=1').subscribe(data => {
+        this.currentValue = (data[0] / 100);
+        localStorage.setItem('currentPrice', this.currentValue);
+        this.messageService.add({severity:'success', summary:'Service Message', detail:'Price updates!'});
+      });
+    }, 1000 * this.refreshSeconds);
   }
 
 }
