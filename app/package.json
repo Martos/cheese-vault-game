@@ -1,6 +1,6 @@
 {
-  "name": "angular-electron",
-  "version": "10.5.1",
+  "name": "cheese-vault",
+  "version": "0.85.2",
   "main": "main.js",
   "private": true,
   "dependencies": {}
