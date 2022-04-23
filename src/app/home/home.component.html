@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="grid">
+    <div class="col box font-bold text-white mx-2">
+      <p-menubar [model]="topBarItems">
+        <ng-template pTemplate="start">
+            <img src="../../assets/img/cheese.png" height="40" class="mr-2">
+        </ng-template>
+        <ng-template pTemplate="end">
+          <h1>$0.50 Pz</h1>
+        </ng-template>
+      </p-menubar>
+    </div>
+    <div class="col-fixed box font-bold text-white" style="width:25%;height: 98vh;">
+      <p-card>Menu 1</p-card>
+      <p-card>Menu 2</p-card>
+      <p-card>Menu 3</p-card>
+    </div>
+  </div>
+</div>
