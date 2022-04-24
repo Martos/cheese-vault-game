@@ -14,4 +14,9 @@ body {
     .p-card-body {
 
     }
+    &.p-card:hover {
+        b {
+            color: rgb(204, 186, 87) !important;
+        }
+    }
 }

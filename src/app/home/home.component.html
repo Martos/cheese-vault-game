@@ -1,6 +1,7 @@
 <div class="container">
   <div class="grid">
-    <div class="col box font-bold text-white mx-2">
+
+    <div class="col-8 box font-bold text-white mx-2">
       <p-menubar [model]="topBarItems">
         <ng-template pTemplate="start">
             <img src="assets/img/cheese.png" height="40" class="mr-2">
@@ -9,11 +10,37 @@
           <h1>{{ currentValue == null ? 'Getting prices ...' : ('$' + currentValue + ' Pz') }}</h1>
         </ng-template>
       </p-menubar>
+
+      <div class="grid">
+        <div class="col-12" style="width: 100%;">
+          <p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="50vh"></p-chart>
+        </div>
+        <div class="col-6">
+          <p-card></p-card>
+        </div>
+        <div class="col-6">
+          <p-card></p-card>
+        </div>
+        <div class="col-12">
+          <p-card></p-card>
+        </div>
+      </div>
+
     </div>
-    <div class="col-fixed box font-bold text-white" style="width:25%;height: 98vh;">
-      <p-card styleClass="menu-card"><b>Centro Scambi</b></p-card>
-      <p-card styleClass="menu-card"><b>Schedario</b></p-card>
-      <p-card styleClass="menu-card"><b>Chiudi</b></p-card>
+
+    <div class="col-4 box font-bold text-white" style="width:31%;height: 98vh;">
+      <p-card styleClass="menu-card">
+        <i class="pi pi-database menu-icon"></i> <b>Importa Dati</b>
+      </p-card>
+      <p-card styleClass="menu-card">
+        <i class="pi pi-chart-line menu-icon"></i> <b>Centro Scambi</b>
+      </p-card>
+      <p-card styleClass="menu-card">
+        <i class="pi pi-book menu-icon"></i> <b>Schedario</b>
+      </p-card>
+      <p-card styleClass="menu-card">
+        <i class="pi pi-power-off menu-icon"></i> <b>Chiudi</b>
+      </p-card>
     </div>
   </div>
 
