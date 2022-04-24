@@ -34,4 +34,4 @@ jobs:
       with:
         name: cheese-vault
         path: release/
-        retention-days: 3
+        retention-days: 1
