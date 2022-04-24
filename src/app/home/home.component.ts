@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   basicOptions: any;
   basicData: any;
 
+  maxPrice = 1000;
   refreshSeconds = 10;
   refreshValueInterval = null;
 
@@ -110,26 +111,22 @@ export class HomeComponent implements OnInit {
 
     this.currentValue = localStorage.getItem('currentPrice');
     if(!this.currentValue) {
-      this.http.get<any>('https://www.randomnumberapi.com/api/v1.0/random?min=0&max=1000&count=1').subscribe(data => {
-        this.currentValue = (data[0] / 100);
-        localStorage.setItem('currentPrice', this.currentValue);
-        dataMask.push(this.currentValue);
-        localStorage.setItem('pricesData', JSON.stringify(dataMask));
-        this.updateChart(dataMask);
-      });
+      this.currentValue = (this.getRandomInt(this.maxPrice) / 100);
+      localStorage.setItem('currentPrice', this.currentValue);
+      dataMask.push(this.currentValue);
+      localStorage.setItem('pricesData', JSON.stringify(dataMask));
+      this.updateChart(dataMask);
     }
     this.refreshValueInterval = setInterval(() => {
-      this.http.get<any>('https://www.randomnumberapi.com/api/v1.0/random?min=0&max=1000&count=1').subscribe(data => {
-        this.currentValue = (data[0] / 100);
-        localStorage.setItem('currentPrice', this.currentValue);
-        dataMask.push(this.currentValue);
-        if(dataMask.length > 9) {
-          dataMask.shift();
-        }
-        localStorage.setItem('pricesData', JSON.stringify(dataMask));
-        this.updateChart(dataMask);
-        this.messageService.add({severity:'success', summary:'Service Message', detail:'Price updates!'});
-      });
+      this.currentValue = (this.getRandomInt(this.maxPrice) / 100);
+      localStorage.setItem('currentPrice', this.currentValue);
+      dataMask.push(this.currentValue);
+      if(dataMask.length > 9) {
+        dataMask.shift();
+      }
+      localStorage.setItem('pricesData', JSON.stringify(dataMask));
+      this.updateChart(dataMask);
+      this.messageService.add({severity:'success', summary:'Service Message', detail:'Price updates!'});
     }, 1000 * this.refreshSeconds);
   }
 
@@ -150,6 +147,10 @@ export class HomeComponent implements OnInit {
 
   showImportDataModal() {
     this.importDataModalShow = true;
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * max);
   }
 
 }
