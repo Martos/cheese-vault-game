@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   cheeseBalance = 0;
   cashBalance = 0;
 
+  cheeseFromFile = 0;
+
   maxPrice = 1000;
   refreshSeconds = 10;
   refreshValueInterval = null;
@@ -171,6 +173,28 @@ export class HomeComponent implements OnInit {
 
   getRandomInt(max) {
     return Math.floor(Math.random() * max);
+  }
+
+  fileChange(event) {
+    let file = event.target.files[0];
+    let binaryData = null;
+
+    const promise = new Promise((resolve) => {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        binaryData = e.target.result;
+        let cheeseFromFileTmp = new Uint32Array(binaryData.slice(169, 173))[0];
+        resolve(cheeseFromFileTmp);
+      };
+      reader.onerror = function(e) {
+        console.log('Error : ' + e.type);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    promise.then(data => {
+      this.cheeseFromFile = Number(data);
+    });
   }
 
 }
