@@ -20,3 +20,9 @@ body {
         }
     }
 }
+
+.estimated-card {
+    &.p-card {
+        height: 100%;
+    }
+}

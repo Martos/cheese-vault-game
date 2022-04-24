@@ -30,7 +30,13 @@
           </p-card>
         </div>
         <div class="col-6">
-          <p-card header="Estimated Values"></p-card>
+          <p-card header="Estimated Values" styleClass="estimated-card">
+            <div class="grid">
+              <div class="col-3"><img style="width: 50%;" src="assets/img/cash.jpg"/></div>
+              <div class="col-3"><b style="font-size: 20px;">{{cheeseBalance*currentValue | number}}</b></div>
+              <div class="col-6"></div>
+            </div>
+          </p-card>
         </div>
         <div class="col-12">
           <p-card></p-card>
