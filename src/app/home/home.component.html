@@ -7,7 +7,10 @@
             <img src="assets/img/cheese.png" height="40" class="mr-2">
         </ng-template>
         <ng-template pTemplate="end">
-          <h1>{{ currentValue == null ? 'Getting prices ...' : ('$' + currentValue + ' Pz') }}</h1>
+          <h1>
+            <span><img src="assets/img/cash.jpg" style="width: 10%;" /></span>
+            {{ currentValue == null ? 'Getting prices ...' : (currentValue + ' Pz') }}
+          </h1>
         </ng-template>
       </p-menubar>
 
