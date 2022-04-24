@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
   basicOptions: any;
   basicData: any;
 
+  cheeseBalance = 0;
+  cashBalance = 0;
+
   maxPrice = 1000;
   refreshSeconds = 10;
   refreshValueInterval = null;
@@ -32,6 +35,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.balanceThread();
     this.pricesThread();
 
     this.basicOptions = {
@@ -96,6 +100,22 @@ export class HomeComponent implements OnInit {
     this.topBarItems = [
       { label: 'Cheese Vault v0.85' }
     ];
+  }
+
+  balanceThread() {
+    let cheeseBalanceTmp = localStorage.getItem('cheeseBalance');
+    if(!cheeseBalanceTmp) {
+      localStorage.setItem('cheeseBalance', "0");
+    } else {
+      this.cheeseBalance = Number(localStorage.getItem('cheeseBalance'));
+    }
+
+    let cashBalanceTmp = localStorage.getItem('cashBalance');
+    if(!cashBalanceTmp) {
+      localStorage.setItem('cashBalance', "0");
+    } else {
+      this.cashBalance = Number(localStorage.getItem('cashBalance'));
+    }
   }
 
   pricesThread() {
