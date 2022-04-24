@@ -12,6 +12,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
 import { ChartModule } from 'primeng/chart';
+import { DialogModule } from 'primeng/dialog';
 
 const PRIMENG_MODULES = [
   ButtonModule,
@@ -19,7 +20,8 @@ const PRIMENG_MODULES = [
   PanelMenuModule,
   MenubarModule,
   ToastModule,
-  ChartModule
+  ChartModule,
+  DialogModule
 ];
 
 @NgModule({

@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-4 box font-bold text-white" style="width:31%;height: 98vh;">
-      <p-card styleClass="menu-card">
+      <p-card styleClass="menu-card" (click)="showImportDataModal()">
         <i class="pi pi-database menu-icon"></i> <b>Importa Dati</b>
       </p-card>
       <p-card styleClass="menu-card">
@@ -45,4 +45,7 @@
   </div>
 
   <p-toast></p-toast>
+  <p-dialog header="Title" [(visible)]="importDataModalShow" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+      Content
+  </p-dialog>
 </div>

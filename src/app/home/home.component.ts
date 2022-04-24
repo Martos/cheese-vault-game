@@ -19,8 +19,14 @@ export class HomeComponent implements OnInit {
   basicOptions: any;
   basicData: any;
 
-  refreshSeconds = 60;
+  refreshSeconds = 10;
   refreshValueInterval = null;
+
+  importDataModalShow = false;
+
+  labelChart = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  pricesData = [];
+  chartFill = true;
 
   constructor(private router: Router, private http: HttpClient, private messageService: MessageService) { }
 
@@ -56,22 +62,15 @@ export class HomeComponent implements OnInit {
     };
 
     this.basicData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: this.labelChart,
         datasets: [
             {
-                label: 'First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
+                label: 'Prices Updates',
+                data: this.pricesData,
+                fill: this.chartFill,
                 borderColor: '#42A5F5',
                 tension: .4
             },
-            {
-                label: 'Second Dataset',
-                data: [28, 48, 40, 19, 86, 27, 90],
-                fill: false,
-                borderColor: '#FFA726',
-                tension: .4
-            }
         ]
     };
 
@@ -99,20 +98,58 @@ export class HomeComponent implements OnInit {
   }
 
   pricesThread() {
+    let pricesDataTmp = JSON.parse(localStorage.getItem('pricesData'));
+    let dataMask = [];
+
+    if(!pricesDataTmp) {
+      localStorage.setItem('pricesData', JSON.stringify(dataMask));
+    } else {
+      this.pricesData = pricesDataTmp;
+      dataMask = pricesDataTmp;
+    }
+
     this.currentValue = localStorage.getItem('currentPrice');
     if(!this.currentValue) {
       this.http.get<any>('https://www.randomnumberapi.com/api/v1.0/random?min=0&max=1000&count=1').subscribe(data => {
         this.currentValue = (data[0] / 100);
         localStorage.setItem('currentPrice', this.currentValue);
+        dataMask.push(this.currentValue);
+        localStorage.setItem('pricesData', JSON.stringify(dataMask));
+        this.updateChart(dataMask);
       });
     }
     this.refreshValueInterval = setInterval(() => {
       this.http.get<any>('https://www.randomnumberapi.com/api/v1.0/random?min=0&max=1000&count=1').subscribe(data => {
         this.currentValue = (data[0] / 100);
         localStorage.setItem('currentPrice', this.currentValue);
+        dataMask.push(this.currentValue);
+        if(dataMask.length > 9) {
+          dataMask.shift();
+        }
+        localStorage.setItem('pricesData', JSON.stringify(dataMask));
+        this.updateChart(dataMask);
         this.messageService.add({severity:'success', summary:'Service Message', detail:'Price updates!'});
       });
     }, 1000 * this.refreshSeconds);
+  }
+
+  updateChart(data: Array<any>) {
+      this.basicData = {
+        labels: this.labelChart,
+        datasets: [
+            {
+                label: 'Prices Updates',
+                data: data,
+                fill: this.chartFill,
+                borderColor: '#42A5F5',
+                tension: .4
+            },
+        ]
+    };
+  }
+
+  showImportDataModal() {
+    this.importDataModalShow = true;
   }
 
 }
