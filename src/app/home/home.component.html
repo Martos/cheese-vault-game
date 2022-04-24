@@ -35,6 +35,10 @@
               <div class="col-3"><img style="width: 50%;" src="assets/img/cash.jpg"/></div>
               <div class="col-3"><b style="font-size: 20px;">{{cheeseBalance*currentValue | number}}</b></div>
               <div class="col-6"></div>
+              <div class="col-12">
+                <b><span *ngIf="pricesData.at(-1) > pricesData.at(-2)" style="color: darkgreen;">Prices Grow</span></b>
+                <b><span *ngIf="pricesData.at(-2) > pricesData.at(-1)" style="color: darkred;">Prices Down</span></b>
+              </div>
             </div>
           </p-card>
         </div>
