@@ -8,15 +8,14 @@
         </ng-template>
         <ng-template pTemplate="end">
           <h1>
-            <span><img src="assets/img/cash.jpg" style="width: 10%;" /></span>
-            {{ currentValue == null ? 'Getting prices ...' : (currentValue + ' Pz') }}
+            {{ currentValue == null ? 'Getting prices ...' : '$ ' + (currentValue + ' Pz') }}
           </h1>
         </ng-template>
       </p-menubar>
 
       <div class="grid">
         <div class="col-12" style="width: 100%;">
-          <p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="50vh"></p-chart>
+          <p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="40vh"></p-chart>
         </div>
         <div class="col-6">
           <p-card header="Balances">
@@ -31,7 +30,7 @@
           </p-card>
         </div>
         <div class="col-6">
-          <p-card></p-card>
+          <p-card header="Estimated Values"></p-card>
         </div>
         <div class="col-12">
           <p-card></p-card>
@@ -42,22 +41,34 @@
 
     <div class="col-4 box font-bold text-white" style="width:31%;height: 98vh;">
       <p-card styleClass="menu-card" (click)="showImportDataModal()">
-        <i class="pi pi-database menu-icon"></i> <b>Importa Dati</b>
+        <i class="pi pi-database menu-icon"></i> <b>Data import</b>
       </p-card>
       <p-card styleClass="menu-card">
-        <i class="pi pi-chart-line menu-icon"></i> <b>Centro Scambi</b>
+        <i class="pi pi-chart-line menu-icon"></i> <b>Exchange</b>
       </p-card>
       <p-card styleClass="menu-card">
-        <i class="pi pi-book menu-icon"></i> <b>Schedario</b>
+        <i class="pi pi-book menu-icon"></i> <b>Tables</b>
       </p-card>
       <p-card styleClass="menu-card">
-        <i class="pi pi-power-off menu-icon"></i> <b>Chiudi</b>
+        <i class="pi pi-power-off menu-icon"></i> <b>Quit</b>
       </p-card>
     </div>
   </div>
 
   <p-toast></p-toast>
-  <p-dialog header="Title" [(visible)]="importDataModalShow" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
-      Content
+  <p-dialog header="Import Data from Savegame" [(visible)]="importDataModalShow" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+    <div class="grid">
+      <div class="col-2"><img style="width: 50%;" src="assets/img/cheese.png"/></div>
+      <div class="col-3"><b style="font-size: 20px; color: #fbc02d;">{{cheeseFromFile}}</b></div>
+    </div>
+    <br />
+    <div class="grid">
+      <div class="col-12">
+        <input type="file" id="ImageBinary" (change)="fileChange($event)" #dataImportInput />
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-check" (click)="importData()" label="Import Data" styleClass="p-button-text"></p-button>
+    </ng-template>
   </p-dialog>
 </div>

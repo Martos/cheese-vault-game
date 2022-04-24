@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
@@ -11,6 +11,8 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  @ViewChild('dataImportInput') dataImportInput: ElementRef;
 
   items: MenuItem[];
   topBarItems: MenuItem[];
@@ -168,6 +170,8 @@ export class HomeComponent implements OnInit {
   }
 
   showImportDataModal() {
+    this.dataImportInput.nativeElement.value = '';
+    this.cheeseFromFile = 0;
     this.importDataModalShow = true;
   }
 
@@ -195,6 +199,12 @@ export class HomeComponent implements OnInit {
     promise.then(data => {
       this.cheeseFromFile = Number(data);
     });
+  }
+
+  importData() {
+    this.cheeseBalance = this.cheeseBalance + this.cheeseFromFile;
+    this.cheeseFromFile = 0;
+    this.importDataModalShow = false;
   }
 
 }
