@@ -205,6 +205,8 @@ export class HomeComponent implements OnInit {
     this.cheeseBalance = this.cheeseBalance + this.cheeseFromFile;
     this.cheeseFromFile = 0;
     this.importDataModalShow = false;
+    this.messageService.add({severity:'success', summary:'Service Message', detail:'Cheese imported!'});
+    localStorage.setItem('cheeseBalance', ""+this.cheeseBalance);
   }
 
 }
