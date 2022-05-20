@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
 
   importDataModalShow = false;
 
-  labelChart = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  labelChart = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
   pricesData = [];
   chartFill = true;
 
@@ -147,7 +147,7 @@ export class HomeComponent implements OnInit {
       this.currentValue = (this.getRandomInt(this.maxPrice) / 100);
       localStorage.setItem('currentPrice', this.currentValue);
       dataMask.push(this.currentValue);
-      if(dataMask.length > 9) {
+      if(dataMask.length > 20) {
         dataMask.shift();
       }
       localStorage.setItem('pricesData', JSON.stringify(dataMask));
@@ -216,6 +216,7 @@ export class HomeComponent implements OnInit {
     this.cheeseBalance = this.cheeseBalance + this.cheeseFromFile;
     this.cheeseFromFile = 0;
     this.importDataModalShow = false;
+
     var file = new File([this.saveFile], "name");
     var a = document.createElement("a");
     var url = URL.createObjectURL(file);
@@ -223,6 +224,7 @@ export class HomeComponent implements OnInit {
     a.download = "DATA.BIN";
     document.body.appendChild(a);
     a.click();
+
     this.messageService.add({severity:'success', summary:'Service Message', detail:'Cheese imported!'});
     localStorage.setItem('cheeseBalance', ""+this.cheeseBalance);
   }
