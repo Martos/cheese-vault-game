@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
   topBarItems: MenuItem[];
   currentValue = null;
 
+  saveFile: any;
+
   basicOptions: any;
   basicData: any;
 
@@ -188,7 +190,13 @@ export class HomeComponent implements OnInit {
       reader.onload = function(e) {
         binaryData = e.target.result;
         let cheeseFromFileTmp = new Uint32Array(binaryData.slice(169, 173))[0];
-        resolve(cheeseFromFileTmp);
+
+        new Uint8Array(binaryData)[169] = 0
+        new Uint8Array(binaryData)[170] = 0
+        new Uint8Array(binaryData)[171] = 0
+        new Uint8Array(binaryData)[172] = 0
+
+        resolve({data: cheeseFromFileTmp, file: binaryData});
       };
       reader.onerror = function(e) {
         console.log('Error : ' + e.type);
@@ -196,8 +204,11 @@ export class HomeComponent implements OnInit {
       reader.readAsArrayBuffer(file);
     });
 
-    promise.then(data => {
-      this.cheeseFromFile = Number(data);
+    promise.then(result => {
+      this.cheeseFromFile = Number(result['data']);
+      this.saveFile = new Blob([binaryData], {
+        type: 'application/octet-stream'
+      });
     });
   }
 
@@ -205,6 +216,13 @@ export class HomeComponent implements OnInit {
     this.cheeseBalance = this.cheeseBalance + this.cheeseFromFile;
     this.cheeseFromFile = 0;
     this.importDataModalShow = false;
+    var file = new File([this.saveFile], "name");
+    var a = document.createElement("a");
+    var url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = "DATA.BIN";
+    document.body.appendChild(a);
+    a.click();
     this.messageService.add({severity:'success', summary:'Service Message', detail:'Cheese imported!'});
     localStorage.setItem('cheeseBalance', ""+this.cheeseBalance);
   }
